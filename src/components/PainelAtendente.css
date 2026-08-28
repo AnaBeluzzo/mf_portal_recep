@@ -1,0 +1,427 @@
+:root {
+  --pa-bg: #f0f4f8;
+  --pa-surface: #ffffff;
+  --pa-border: #e2e8f0;
+  --pa-text: #1e293b;
+  --pa-text-muted: #64748b;
+  --pa-primary: #0d9488;
+  --pa-primary-dark: #0f766e;
+  --pa-primary-light: #ccfbf1;
+  --pa-primary-tint: #f0fdfa;
+  --pa-accent: #0284c7;
+  --pa-warning: #f59e0b;
+  --pa-warning-bg: #fef3c7;
+  --pa-warning-dark: #b45309;
+  --pa-danger: #dc2626;
+  --pa-danger-bg: #fee2e2;
+  --pa-danger-dark: #991b1b;
+  --pa-success: #16a34a;
+  --pa-success-bg: #dcfce7;
+  --pa-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --pa-shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.1);
+  --pa-radius: 12px;
+}
+
+.painel-container {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--pa-bg);
+  color: var(--pa-text);
+  min-height: 100vh;
+  padding: 32px 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ---------- Header ---------- */
+.painel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--pa-surface);
+  border-radius: var(--pa-radius);
+  padding: 24px 28px;
+  box-shadow: var(--pa-shadow);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.painel-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.painel-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--pa-primary-tint);
+  color: var(--pa-primary);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.painel-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--pa-text);
+}
+
+.painel-subtitle {
+  font-size: 0.9rem;
+  color: var(--pa-text-muted);
+  margin: 4px 0 0;
+}
+
+.painel-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 28px;
+  background: var(--pa-primary-tint);
+  border: 1px solid var(--pa-primary-light);
+  border-radius: var(--pa-radius);
+  min-width: 140px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.painel-counter.is-zero {
+  background: var(--pa-success-bg);
+  border-color: #bbf7d0;
+}
+
+.counter-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--pa-primary-dark);
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.painel-counter.is-zero .counter-number {
+  color: #15803d;
+}
+
+.counter-label {
+  font-size: 0.8rem;
+  color: var(--pa-text-muted);
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* ---------- Call banner ---------- */
+.chamada-banner {
+  background: linear-gradient(135deg, var(--pa-primary), var(--pa-accent));
+  border-radius: var(--pa-radius);
+  padding: 18px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--pa-shadow-lg);
+  animation: slideIn 0.35s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chamada-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.chamada-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.chamada-nome {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.chamada-prioridade.prioridade-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Actions ---------- */
+.painel-actions {
+  margin-bottom: 20px;
+}
+
+.btn-chamar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--pa-primary);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+}
+
+.btn-chamar:hover:not(:disabled) {
+  background: var(--pa-primary-dark);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+}
+
+.btn-chamar:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-chamar:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+  color: #64748b;
+}
+
+/* ---------- Table ---------- */
+.painel-table-wrapper {
+  background: var(--pa-surface);
+  border-radius: var(--pa-radius);
+  box-shadow: var(--pa-shadow);
+  overflow: hidden;
+}
+
+.painel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.painel-table thead th {
+  background: #f8fafc;
+  color: var(--pa-text-muted);
+  font-weight: 600;
+  text-align: left;
+  padding: 14px 20px;
+  border-bottom: 2px solid var(--pa-border);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.painel-table tbody td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--pa-border);
+  color: var(--pa-text);
+}
+
+.painel-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.painel-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.painel-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+tr.proximo-da-fila {
+  background: var(--pa-primary-tint) !important;
+}
+
+tr.proximo-da-fila td {
+  font-weight: 500;
+}
+
+.td-pos {
+  width: 56px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--pa-text-muted);
+}
+
+.td-nome {
+  font-weight: 600;
+}
+
+.td-horario {
+  color: var(--pa-text-muted);
+  white-space: nowrap;
+}
+
+.td-prioridade {
+  width: 120px;
+}
+
+/* ---------- Priority badges ---------- */
+.prioridade-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prioridade-badge.normal {
+  background: var(--pa-success-bg);
+  color: var(--pa-success);
+}
+
+.prioridade-badge.urgente {
+  background: var(--pa-danger-bg);
+  color: var(--pa-danger-dark);
+}
+
+/* ---------- Loading state ---------- */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 64px 20px;
+  color: var(--pa-text-muted);
+  font-size: 0.95rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.spinner-lg {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+  border-color: var(--pa-primary-light);
+  border-top-color: var(--pa-primary);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Error banner ---------- */
+.erro-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--pa-danger-bg);
+  color: var(--pa-danger-dark);
+  border: 1px solid #fecaca;
+  border-radius: var(--pa-radius);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.erro-banner svg {
+  flex-shrink: 0;
+}
+
+.erro-retry {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--pa-danger-dark);
+  color: var(--pa-danger-dark);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.erro-retry:hover {
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* ---------- Empty state ---------- */
+.fila-vazia-row td {
+  padding: 48px 20px !important;
+  text-align: center;
+}
+
+.fila-vazia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--pa-text-muted);
+  font-size: 0.95rem;
+}
+
+.fila-vazia svg {
+  color: var(--pa-success);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .painel-container {
+    padding: 16px 12px;
+  }
+
+  .painel-header {
+    padding: 18px 20px;
+  }
+
+  .painel-title {
+    font-size: 1.25rem;
+  }
+
+  .painel-counter {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .counter-number {
+    font-size: 2rem;
+  }
+
+  .painel-table thead th,
+  .painel-table tbody td {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+
+  .td-prioridade {
+    width: auto;
+  }
+
+  .btn-chamar {
+    width: 100%;
+    justify-content: center;
+  }
+}
