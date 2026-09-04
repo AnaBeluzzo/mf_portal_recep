@@ -34,3 +34,63 @@ export async function chamarProximo(unidadeId = UNIDADE_ID) {
   }
   return res.json()
 }
+
+function lerErroApi(res) {
+  return res.json().catch(() => ({}))
+}
+
+/**
+ * PUT /fila/{unidadeId}/pacientes/{pacienteId}
+ * Altera nome e/ou prioridade de um paciente da fila.
+ */
+export async function alterarPaciente(
+  unidadeId = UNIDADE_ID,
+  pacienteId,
+  dados = {},
+) {
+  if (!pacienteId) {
+    throw new Error('Identificador do paciente é obrigatório.')
+  }
+
+  const res = await fetch(
+    `${API_BASE_URL}fila/${unidadeId}/pacientes/${pacienteId}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dados),
+    },
+  )
+
+  if (!res.ok) {
+    const erro = await lerErroApi(res)
+    throw new Error(erro.mensagem || 'Erro ao alterar paciente.')
+  }
+
+  return res.json()
+}
+
+/**
+ * DELETE /fila/{unidadeId}/pacientes/{pacienteId}
+ * Remove um paciente da fila da unidade informada.
+ */
+export async function removerPaciente(unidadeId = UNIDADE_ID, pacienteId) {
+  if (!pacienteId) {
+    throw new Error('Identificador do paciente é obrigatório.')
+  }
+
+  const res = await fetch(
+    `${API_BASE_URL}fila/${unidadeId}/pacientes/${pacienteId}`,
+    {
+      method: 'DELETE',
+    },
+  )
+
+  if (!res.ok) {
+    const erro = await lerErroApi(res)
+    throw new Error(erro.mensagem || 'Erro ao remover paciente.')
+  }
+
+  return res.json()
+}

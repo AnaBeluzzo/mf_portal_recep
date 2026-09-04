@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import {
   fetchPacientes,
   chamarProximo,
+  alterarPaciente,
+  removerPaciente,
   UNIDADE_ID,
 } from '../data/apiFila.js'
 import './PainelAtendente.css'
@@ -25,6 +27,8 @@ export default function PainelAtendente() {
   const [loading, setLoading] = useState(true)
   const [erro, setErro] = useState(null)
   const [chamando, setChamando] = useState(false)
+  const [atualizandoId, setAtualizandoId] = useState(null)
+  const [removendoId, setRemovendoId] = useState(null)
 
   const carregarFila = useCallback(async () => {
     setLoading(true)
@@ -63,6 +67,44 @@ export default function PainelAtendente() {
       setChamando(false)
     }
   }, [])
+
+  const handleAlterarPrioridade = useCallback(async (pacienteId, prioridade) => {
+    setAtualizandoId(pacienteId)
+    setErro(null)
+    try {
+      const pacienteAtualizado = await alterarPaciente(UNIDADE_ID, pacienteId, {
+        prioridade,
+      })
+
+      setFila((prev) =>
+        prev.map((paciente) =>
+          paciente.id === pacienteId
+            ? { ...paciente, ...pacienteAtualizado }
+            : paciente,
+        ),
+      )
+    } catch (e) {
+      setErro(e.message)
+    } finally {
+      setAtualizandoId(null)
+    }
+  }, [])
+
+  const handleRemoverPaciente = useCallback(async (pacienteId) => {
+    setRemovendoId(pacienteId)
+    setErro(null)
+    try {
+      await removerPaciente(UNIDADE_ID, pacienteId)
+      setFila((prev) => prev.filter((paciente) => paciente.id !== pacienteId))
+      if (chamado && chamado.id === pacienteId) {
+        setChamado(null)
+      }
+    } catch (e) {
+      setErro(e.message)
+    } finally {
+      setRemovendoId(null)
+    }
+  }, [chamado])
 
   const aguardando = fila.length
 
@@ -181,12 +223,13 @@ export default function PainelAtendente() {
                 <th>Paciente</th>
                 <th>Horário de chegada</th>
                 <th>Prioridade</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
               {ordenados.length === 0 ? (
                 <tr className="fila-vazia-row">
-                  <td colSpan={4}>
+                  <td colSpan={5}>
                     <div className="fila-vazia">
                       <svg
                         width="40"
@@ -216,9 +259,44 @@ export default function PainelAtendente() {
                       {formatarHorario(pac.horarioChegada)}
                     </td>
                     <td className="td-prioridade">
-                      <span className={`prioridade-badge ${pac.prioridade}`}>
-                        {PRIORIDADE_LABEL[pac.prioridade]}
-                      </span>
+                      <div className="prioridade-editor">
+                        <span className={`prioridade-badge ${pac.prioridade}`}>
+                          {PRIORIDADE_LABEL[pac.prioridade]}
+                        </span>
+                        <button
+                          type="button"
+                          className={`btn-status-toggle ${pac.prioridade}`}
+                          onClick={() =>
+                            handleAlterarPrioridade(
+                              pac.id,
+                              pac.prioridade === 'urgente' ? 'normal' : 'urgente',
+                            )
+                          }
+                          disabled={atualizandoId === pac.id || chamando || loading}
+                          aria-label={`Trocar prioridade de ${pac.nome}`}
+                        >
+                          {atualizandoId === pac.id
+                            ? 'Atualizando...'
+                            : pac.prioridade === 'urgente'
+                              ? 'Marcar como normal'
+                              : 'Marcar como urgente'}
+                        </button>
+                      </div>
+                    </td>
+                    <td className="td-acoes">
+                      <button
+                        type="button"
+                        className="btn-remover"
+                        onClick={() => handleRemoverPaciente(pac.id)}
+                        disabled={
+                          removendoId === pac.id ||
+                          atualizandoId === pac.id ||
+                          chamando ||
+                          loading
+                        }
+                      >
+                        {removendoId === pac.id ? 'Removendo...' : 'Remover'}
+                      </button>
                     </td>
                   </tr>
                 ))

@@ -270,7 +270,70 @@ tr.proximo-da-fila td {
 }
 
 .td-prioridade {
-  width: 120px;
+  width: 180px;
+}
+
+.td-acoes {
+  width: 110px;
+}
+
+.prioridade-editor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-status-toggle {
+  border: none;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.btn-status-toggle:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-status-toggle:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-status-toggle.normal {
+  background: var(--pa-success-bg);
+  color: var(--pa-success);
+}
+
+.btn-status-toggle.urgente {
+  background: var(--pa-danger-bg);
+  color: var(--pa-danger-dark);
+}
+
+.btn-remover {
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: var(--pa-danger-bg);
+  color: var(--pa-danger-dark);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-remover:hover:not(:disabled) {
+  background: #fecaca;
+}
+
+.btn-remover:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 /* ---------- Priority badges ---------- */
