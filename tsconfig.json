@@ -1,0 +1,4 @@
+{
+  "compilerOptions": { "allowJs": true, "jsx": "preserve", "noEmit": true, "module": "esnext", "moduleResolution": "bundler" },
+  "include": ["src/**/*.js", "src/**/*.jsx"]
+}
